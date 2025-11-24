@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import Card from "./components/Card";
-import LimitSelector from "./components/LimitSelector";
-import FilterInput from "./components/FilterInput";
-import SortSelector from "./components/SortSelector";
+import HomePage from "./pages/home";
+import AboutPage from "./pages/about";
+import { Route, Routes } from "react-router";
+import Header from "./components/Header";
+import NotFoundPage from "./pages/not_found";
+import CoinDetailPage from "./pages/coin-details";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -59,27 +61,31 @@ const App = () => {
     }
   }, [limit, sortBy]);
 
-  const filteredCoins = coins.filter((coin) => {
-    return (
-      coin.name.toLowerCase().includes(filter.toLowerCase()) ||
-      coin.symbol.toLowerCase().includes(filter.toLowerCase())
-    );
-  });
-
   return (
-    <div>
-      <h1>CRYPTO DASHBOARD</h1>
-      {loading && <p>Please wait we getting the data </p>}
-
-      <div className="top-controls">
-        <FilterInput filter={filter} onFilterChange={setFilter} />
-        <SortSelector sortBy={sortBy} onSortByChange={setSortBy} />
-        <LimitSelector limit={limit} setlimit={setlimit} />
-      </div>
-
-      {error && <p className="error">{error}</p>}
-      {!loading && !error && <Card data={filteredCoins} />}
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              coins={coins}
+              filter={filter}
+              setFilter={setFilter}
+              limit={limit}
+              setlimit={setlimit}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              loading={loading}
+              error={error}
+            />
+          }
+        />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/coin/:id" element={<CoinDetailPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 };
 
