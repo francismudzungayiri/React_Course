@@ -2,6 +2,7 @@ import LimitSelector from "../components/LimitSelector";
 import FilterInput from "../components/FilterInput";
 import SortSelector from "../components/SortSelector";
 import Card from "../components/Card";
+import Spinner from "../components/Spinner";
 
 const HomePage = ({
   coins,
@@ -24,7 +25,7 @@ const HomePage = ({
   return (
     <div>
       <h1>CRYPTO DASHBOARD</h1>
-      {loading && <p>Please wait we getting the data </p>}
+      {loading && <Spinner color="white" />}
 
       <div className="top-controls">
         <FilterInput filter={filter} onFilterChange={setFilter} />

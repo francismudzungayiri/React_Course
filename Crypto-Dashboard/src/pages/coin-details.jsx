@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router";
+import Spinner from "../components/Spinner";
 
 const API_COIN_URL = import.meta.env.VITE_API_COIN_URL;
 
@@ -37,7 +38,7 @@ const CoinDetailPage = () => {
         {coin ? `${coin.name} (${coin.symbol})` : "Coin Details"}
       </h1>
 
-      {loading && <p>Loading coin data...</p>}
+      {loading && <Spinner />}
       {error && <div className="error">{error}</div>}
       {!loading && !error && (
         <>
