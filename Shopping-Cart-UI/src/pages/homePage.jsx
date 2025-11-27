@@ -1,10 +1,13 @@
+import { useContext } from "react";
 import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
+import { ProductContext } from "../context/productContextObject";
 
-const HomePage = ({ loading, error, products }) => {
+const HomePage = () => {
+  const { products, loading, error } = useContext(ProductContext);
   return (
     <div className="min-h-screen bg-gray-100 px-15 py-0">
-      <Header products={products} />
+      <Header />
       <h1 className="text-3xl text-gray-400 font-bold mb-8">
         Products Catalog
       </h1>
