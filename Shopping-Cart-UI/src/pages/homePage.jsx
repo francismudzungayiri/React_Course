@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
-import { ProductContext } from "../context/productContextObject";
+import { ProductContext } from "../context/ContextObjects";
 
 const HomePage = () => {
   const { products, loading, error } = useContext(ProductContext);

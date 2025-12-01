@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ProductContext } from "./productContextObject";
+import { ProductContext } from "./ContextObjects";
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
