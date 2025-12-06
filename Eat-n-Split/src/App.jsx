@@ -10,6 +10,30 @@ const App = () => {
   const [wholeBill, setWholeBill] = useState("");
   const [myBill, setMyBill] = useState("");
   const friendBill = wholeBill ? wholeBill - myBill : "";
+  const [selectedPayer, setSelectedPayer] = useState("");
+
+  const calcSplitBill = () => {
+    if (!selectedPayer) {
+      alert("Please select who is paying the bill.");
+      return;
+    }
+
+    if (selectedPayer !== "you") {
+      alert(
+        `You owe ${selectedFriend} $${
+          myBill < friendBill ? friendBill - myBill : myBill - friendBill
+        }. Total Bill: $${wholeBill}`
+      );
+    } else {
+      alert(`${selectedFriend} owes you $${myBill}. Total Bill: $${wholeBill}`);
+    }
+
+    // Reset fields after calculation
+    setWholeBill("");
+    setMyBill("");
+    setSelectedPayer("");
+    setSelectedFriend(null);
+  };
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center bg-linear-to-b from-[#c0c2c3] to-[#eef2f3]">
@@ -25,13 +49,18 @@ const App = () => {
             {friends.map((friend, index) => (
               <li key={index} className="text-gray-600 flex justify-between ">
                 {friend}
+                <p>{}</p>
                 <button
                   onClick={() => {
-                    setSelectedFriend(friend);
+                    if (selectedFriend === friend) {
+                      setSelectedFriend(null);
+                    } else {
+                      setSelectedFriend(friend);
+                    }
                   }}
                   className="px-4 py-2 cursor-pointer border border-blue-400 rounded-sm text-blue-400 hover:bg-blue-400 hover:text-white transition"
                 >
-                  Select
+                  {selectedFriend === friend ? "close" : "select"}
                 </button>
               </li>
             ))}
@@ -92,6 +121,20 @@ const App = () => {
               </p>
               <TextInput placeholder={"000"} value={friendBill} disabled />
             </div>
+            <div>
+              <p className="flex gap-6 items-center"> Who is paying</p>
+              <select
+                className="w-1/2 p-2 inline border border-gray-700 rounded-md mt-2"
+                onChange={(e) => setSelectedPayer(e.target.value)}
+              >
+                <option value="" disabled selected>
+                  Choose Who is paying
+                </option>
+                <option value="you">You</option>
+                <option value={`${selectedFriend}`}>{selectedFriend} </option>
+              </select>
+            </div>
+            <Button text={"Split Bill"} type="submit" onClick={calcSplitBill} />
           </div>
         )}
       </div>
