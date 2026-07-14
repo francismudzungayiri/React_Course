@@ -1,4 +1,4 @@
-const PackingList = ({ items }) => {
+const PackingList = ({ items, deleteItem, togglePacked }) => {
   return (
     <div className="flex gap-5 mt-16 bg-primary p-5 h-[50vh]">
       {items.map(({ id, item, quantity, packed }) => (
@@ -7,7 +7,12 @@ const PackingList = ({ items }) => {
           className="flex justify-between text-background items-center p-4 border-2 border-accent rounded-md h-fit w-64"
         >
           <div>
-            <input type="checkbox" checked={packed} readOnly className="mr-2" />
+            <input
+              type="checkbox"
+              checked={packed}
+              onChange={() => togglePacked(id)}
+              className="mr-2"
+            />
             <span className={packed ? "line-through text-gray-400 " : ""}>
               {item} (x{quantity})
             </span>
@@ -16,6 +21,7 @@ const PackingList = ({ items }) => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             className="size-6 fill-current text-white hover:text-red-500 cursor-pointer transition"
+            onClick={() => deleteItem(id)}
           >
             <path
               fillRule="evenodd"
